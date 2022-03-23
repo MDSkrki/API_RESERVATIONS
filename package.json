@@ -1,0 +1,29 @@
+{
+  "name": "api_reservations",
+  "version": "1.0.0",
+  "description": "## Table of Contents",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MDSkrki/API_RESERVATIONS.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MDSkrki/API_RESERVATIONS/issues"
+  },
+  "homepage": "https://github.com/MDSkrki/API_RESERVATIONS#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "sequelize": "^6.17.0"
+  }
+}
