@@ -1,4 +1,4 @@
-
+import User from "./src/users/userModel.js";
 
 // Post user
 app.post('/', async (req,res) => {
