@@ -10,3 +10,5 @@ try{
 }catch(error){
     console.log('Unable to connect to the database', error)
 }
+
+export default connection;
