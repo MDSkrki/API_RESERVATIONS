@@ -16,5 +16,5 @@ app.use(express.json());
 
 
 // Express port definition and server up
-app.set("port", 4000);
-app.listen(app.get("port"), () => console.log("Server up at 4000"))
+app.set("port", process.env.PORT);
+app.listen(app.get("port"), () => console.log(`Server up at ${process.env.PORT}`));

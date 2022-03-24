@@ -1,11 +1,10 @@
 import { Sequelize } from "sequelize";
 
-const connection = new Sequelize('api_reservations', 'root', 'root', {
-    host: 'localhost',
-    dialect: 'mysql'
-});
-
 try{
+    const connection = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.PASSWORD, {
+        host: process.env.DB_HOST,
+        dialect: process.env.DB_DIALECT,
+    });
     await connection.authenticate();
     console.log('Connection has been established successfully.')
 }catch(error){
