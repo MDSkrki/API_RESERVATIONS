@@ -1,8 +1,8 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
-import {connection} from "../../config/mysqlDB.js"
+import { connection } from "../../config/mysqlDB.js"
 import Doctor from "../doctor/doctorModel.js";
 
-class User extends Model {};
+class User extends Model { };
 
 const userSchema = {
     // Model attributes are defined here
@@ -26,7 +26,7 @@ const userSchema = {
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: "patient",
-    }, 
+    },
     phone_number: {
         type: DataTypes.STRING,
         allowNull: false
@@ -37,12 +37,12 @@ User.init(userSchema, {
     // Other model options go here
     sequelize: connection, // We need to pass the connection instance
     modelName: 'User' // We need to choose the model name
-  });
+});
 
-//Association with doctor
-User.hasOne(Doctor, {foreignKey: "FK_idUser"}),
-Doctor.hasOne(User, {foreignKey: "id"})
 
 await User.sync();
+//Association with doctor
+User.hasOne(Doctor, { foreignKey: "FK_idUser" })
+Doctor.hasOne(User, { foreignKey: "id" })
 
 export default User;
