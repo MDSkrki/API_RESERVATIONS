@@ -10,7 +10,6 @@ const getUser = async (req, res) => {
     if (req.query.email) queryUser.email = req.query.email;
     if (req.query.role) queryUser.role = req.query.role;
     if (req.query.phone_number) queryUser.phone_number = req.query.phone_number;
-    console.log(queryUser, "helloo");
     res.json(
       await User.findAll({
         where: queryUser,
@@ -24,14 +23,19 @@ const getUser = async (req, res) => {
 // Post user
 const postUser = async (req, res) => {
   try {
-    const createUser = await User.create({
-      name: req.body.name,
-      lastname: req.body.lastname,
-      email: req.body.email,
-      password: req.body.password,
-      phone_number: req.body.phone_number,
-    });
-    res.json(createUser);
+    if (User.findAll({ where: User.email === req.body.email })){
+        res.status(404).json('This user exist');
+    }else {
+        const createUser = await User.create({
+            name: req.body.name,
+            lastname: req.body.lastname,
+            email: req.body.email,
+            password: req.body.password,
+            phone_number: req.body.phone_number,
+          });
+          res.json(createUser);
+    }
+    
   } catch (error) {
     console.log(error);
   }
