@@ -7,7 +7,7 @@ const connection = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, p
     dialect: process.env.DB_DIALECT,
 });
 
-const dbConnection = async () => {
+export const dbConnection = async () => {
     try{
         await connection.authenticate();
         console.log('Connection has been established successfully.')

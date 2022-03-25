@@ -1,7 +1,6 @@
 import express from "express";
 import env from "dotenv";
 import {dbConnection} from "./config/mysqlDB.js";
-import Doctor from "./src/doctor/doctorModel.js"
 
 const app = express();
 
