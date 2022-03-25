@@ -1,4 +1,4 @@
-import User from "./userModel.js";
+import {User} from "../shared/models.js";
 
 //Get Users by all fields
 const getUser = async (req, res) => {
