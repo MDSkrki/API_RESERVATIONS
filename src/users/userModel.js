@@ -1,6 +1,5 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 import { connection } from "../../config/mysqlDB.js";
-import Doctor from "../doctor/doctorModel.js";
 
 class User extends Model {}
 
@@ -17,6 +16,7 @@ const userSchema = {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true
   },
   password: {
     type: DataTypes.STRING,
@@ -38,10 +38,6 @@ User.init(userSchema, {
   sequelize: connection, // We need to pass the connection instance
   modelName: "User", // We need to choose the model name
 });
-
-//Association with doctor
-User.hasOne(Doctor, { foreignKey: "FK_idUser" }),
-  Doctor.hasOne(User, { foreignKey: "id" });
 
 await User.sync();
 
