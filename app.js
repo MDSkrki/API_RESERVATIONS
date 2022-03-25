@@ -1,7 +1,8 @@
 import express from "express";
-import env from "dotenv";
-import { dbConnection } from "./config/mysqlDB.js";
-import routerUser from "./src/users/userRoute.js"; // User route
+import env from "dotenv"; // Environment vars
+import { dbConnection } from "./config/mysqlDB.js"; // DB connection with sequelize
+import routerUser from "./src/users/userRoute.js"; // User routes
+import routerDoctor from "./src/doctor/doctorRoute.js"; // Doctor routes
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 //Endpoints
 app.use("/user", routerUser);
+app.use("/doctor", routerDoctor);
 
 // Express port definition and server up
 app.set("port", process.env.PORT);

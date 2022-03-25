@@ -2,8 +2,10 @@ import express from "express";
 const router = express.Router();
 import { getDoctor, postDoctor, updateDoctor, deleteDoctor } from "./doctorController.js";
 
-//getUser
-router.get("/", );
-router.post("/", );
-router.patch("/:id", );
-router.delete("/:id", );
+
+router.get("/", getDoctor);
+router.post("/", postDoctor);
+router.patch("/:id", updateDoctor);
+router.delete("/:id", deleteDoctor);
+
+export default router;
