@@ -29,5 +29,6 @@ Visit.init(visitSchema, {
     sequelize: connection,
     modelName: 'Visit',
 });
+await Visit.sync();
 
 export default Visit;

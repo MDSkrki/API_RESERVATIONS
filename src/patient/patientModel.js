@@ -32,5 +32,6 @@ Patient.init(patientSchema, {
     sequelize: connection,
     modelName: 'Patient',
 });
+await Patient.sync();
 
 export default Patient;
