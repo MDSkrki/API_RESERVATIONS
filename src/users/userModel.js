@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
-import connection from "../../config/mysqlDB.js"
+import { connection } from "../../config/mysqlDB.js"
 import Doctor from "../doctor/doctorModel.js";
 
 class User extends Model {};
