@@ -1,7 +1,8 @@
 import express from "express";
 import env from "dotenv";
 import {dbConnection} from "./config/mysqlDB.js";
-import Doctor from "./src/doctor/doctorModel.js"
+import Doctor from "./src/doctor/doctorModel.js";
+import User from "./src/users/userModel.js";
 
 const app = express();
 
@@ -16,6 +17,17 @@ app.get('/doctor', async (req,res) => {
     })
     res.json(query)
 });
+// Post user
+app.post('/user', async (req,res) => {
+    const createUser = await User.create({
+            name: "mihai",
+            lastname: "daniel",
+            email: "mihai@api.com",
+            password: "mihai",
+            phone_number: "687543223"
+    })
+res.json(createUser)
+})
 
 // Express port definition and server up
 app.set("port", process.env.PORT);

@@ -39,10 +39,10 @@ User.init(userSchema, {
     modelName: 'User' // We need to choose the model name
   });
 
-//Association with doctor
-User.hasOne(Doctor, {foreignKey: "FK_idUser"}),
-Doctor.hasOne(User, {foreignKey: "id"})
-
 await User.sync();
+
+//Association with doctor
+User.hasOne(Doctor, {foreignKey: "FK_idUser"})
+Doctor.hasOne(User, {foreignKey: "id"})
 
 export default User;
