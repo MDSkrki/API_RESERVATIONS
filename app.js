@@ -1,6 +1,7 @@
 import express from "express";
 import env from "dotenv";
 import {dbConnection} from "./config/mysqlDB.js";
+import Doctor from "./src/doctor/doctorModel.js"
 
 const app = express();
 
@@ -9,7 +10,7 @@ env.config();
 
 //Parse body to JSON
 app.use(express.json());
-app.get('/doctor',async (req,res) => {
+app.get('/doctor', async (req,res) => {
     const query = await Doctor.findAll({
         include: [{model: User}]
     })
