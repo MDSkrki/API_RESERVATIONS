@@ -30,4 +30,6 @@ Visit.init(visitSchema, {
     modelName: 'Visit',
 });
 
+Visit.sync();
+
 export default Visit;
