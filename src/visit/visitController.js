@@ -12,3 +12,14 @@ export const getVisits = async (req, res) => {
         res.json(error);
     }
 }
+
+export const postVisit = async (req,res) => {
+    try {
+        const query = 'Post working';
+        console.log(query);
+        res.json(query);
+    } catch (error) {
+        console.log(error);
+        res.json(error);
+    }
+}

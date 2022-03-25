@@ -1,9 +1,9 @@
 import express from "express";
-import { getVisits } from "./visitController.js";
+import { getVisits, postVisit } from "./visitController.js";
 const router = express.Router();
 
 router.get('/', getVisits);
-router.post('/');
+router.post('/', postVisit);
 router.patch('/');
 router.delete('/');
 
