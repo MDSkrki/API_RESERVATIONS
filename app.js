@@ -1,6 +1,6 @@
 import express from "express";
 import env from "dotenv";
-import dbConnection from "./config/mysqlDB.js";
+import {dbConnection} from "./config/mysqlDB.js";
 
 const app = express();
 
