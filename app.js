@@ -9,6 +9,12 @@ env.config();
 
 //Parse body to JSON
 app.use(express.json());
+app.get('/doctor',async (req,res) => {
+    const query = await Doctor.findAll({
+        include: [{model: User}]
+    })
+    res.json(query)
+});
 
 // Express port definition and server up
 app.set("port", process.env.PORT);
