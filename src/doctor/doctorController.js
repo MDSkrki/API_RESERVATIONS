@@ -1,6 +1,6 @@
 import {Doctor, User} from "../shared/models.js";
 
-//Get Users by all fields with User model.
+//Get doctor by all fields with User model.
 const getDoctor = async (req, res) => {
   try {
     const queryDoctor = {};
@@ -13,7 +13,7 @@ const getDoctor = async (req, res) => {
   }
 };
 
-// Post user
+// Post doctor
 const postDoctor = async (req, res) => {
   try {
     const createDoctor = await Doctor.create({
@@ -24,10 +24,11 @@ const postDoctor = async (req, res) => {
     res.json(createDoctor);
   } catch (error) {
     console.log(error);
+    res.json(error)
   }
 };
 
-// PATCH/UPDATE USER
+// Patch/Put doctor
 const updateDoctor = async (req, res) => {
   try {
     if (await Doctor.findByPk(req.params.id)) {
