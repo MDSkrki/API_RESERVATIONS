@@ -13,7 +13,7 @@ const doctorSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  FK_idUser: {
+  idUser: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },

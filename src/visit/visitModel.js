@@ -15,11 +15,11 @@ const visitSchema = {
     state: {
         type: DataTypes.STRING,
     },
-    FK_idDoctor: {
+    idDoctor: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    FK_idPatient: {
+    idPatient: {
         type: DataTypes.INTEGER,
         allowNull: false,
     }

@@ -22,7 +22,7 @@ const patientSchema = {
     address: {
         type: DataTypes.STRING,
     },
-    FK_idUser: {
+    idUser: {
         type: DataTypes.INTEGER,
         allowNull: false,
     }, 

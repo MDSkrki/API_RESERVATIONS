@@ -1,16 +1,21 @@
-import {Visit} from "../shared/models.js";
+import {Visit, Doctor, Patient} from "../shared/models.js";
 
-const getVisits = async (req, res) => {
-  try {
-    const filter = req.query;
-    const query = await Visit.findAll({
-      where: filter,
-    });
-    res.json(query);
-  } catch (error) {
-    res.json(error);
-  }
-};
+const getVisit = async (req, res) => {
+    try {
+      const queryVisit = {};
+      if (req.query.id) queryVisit.id = req.query.id;
+      if (req.query.date) queryVisit.date = req.query.date;
+      if (req.query.description) queryVisit.description = req.query.description;
+      if (req.query.state) queryVisit.state = req.query.state;
+      res.json(
+        await Visit.findAll({
+          where: queryVisit, include: [{model: Doctor}, {model: Patient}]
+        })
+      );
+    } catch (error) {
+      res.json(error);
+    }
+  };
 
 // Post Visit
 const postVisit = async (req, res) => {
@@ -19,8 +24,8 @@ const postVisit = async (req, res) => {
       date: req.body.date,
       description: req.body.description,
       state: req.body.state,
-      FK_idDoctor: req.body.FK_idDoctor,
-      FK_idPatient: req.body.FK_idPatient,
+      idDoctor: req.body.idDoctor,
+      idPatient: req.body.idPatient,
     });
     res.json(createVisit);
   } catch (error) {
@@ -37,8 +42,8 @@ const updateVisit = async (req, res) => {
           date: req.body.date,
           description: req.body.description,
           state: req.body.state,
-          FK_idDoctor: req.body.FK_idDoctor,
-          FK_idPatient: req.body.FK_idPatient,
+          idDoctor: req.body.idDoctor,
+          idPatient: req.body.idPatient,
         },
         { where: { id: req.params.id } }
       );
@@ -65,4 +70,4 @@ const deleteVisit = async (req, res) => {
   }
 };
 
-export { getVisits, postVisit, updateVisit, deleteVisit };
+export { getVisit, postVisit, updateVisit, deleteVisit };
