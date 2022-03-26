@@ -1,4 +1,5 @@
 import { User } from "../shared/models.js";
+import {hasher} from '../shared/services.js';
 
 //Get Users by all fields
 const getUser = async (req, res) => {
@@ -27,7 +28,7 @@ const postUser = async (req, res) => {
       name: req.body.name,
       lastname: req.body.lastname,
       email: req.body.email,
-      password: req.body.password,
+      password: hasher(req.body.password),
       phone_number: req.body.phone_number,
     });
     res.json(createUser);
