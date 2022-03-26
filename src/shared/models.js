@@ -8,8 +8,8 @@ User.hasOne(Doctor, { foreignKey: "FK_idUser" }),
 Doctor.hasOne(User, { foreignKey: "id" });
 
 //Association 1:1 User with Patient
-User.hasOne(Patient);
-Patient.belongsTo(User);
+User.hasOne(Patient, {foreignKey: "FK_idUser"});
+Patient.belongsTo(User, {foreignKey: "id"});
 
 //Association 1:n Visit with Patient
 Patient.hasMany(Visit);
