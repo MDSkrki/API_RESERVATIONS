@@ -33,4 +33,5 @@ Patient.init(patientSchema, {
     modelName: 'Patient',
 });
 
+Patient.sync();
 export default Patient;
