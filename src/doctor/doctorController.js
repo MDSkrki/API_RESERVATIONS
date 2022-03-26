@@ -19,7 +19,7 @@ const postDoctor = async (req, res) => {
     const createDoctor = await Doctor.create({
       specialty: req.body.specialty,
       schedule: req.body.schedule,
-      FK_idUser: req.body.FK_idUser,
+      idUser: req.body.idUser,
     });
     res.json(createDoctor);
   } catch (error) {
