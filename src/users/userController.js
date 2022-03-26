@@ -1,4 +1,4 @@
-import {User} from "../shared/models.js";
+import { User } from "../shared/models.js";
 
 //Get Users by all fields
 const getUser = async (req, res) => {
@@ -23,21 +23,17 @@ const getUser = async (req, res) => {
 // Post user
 const postUser = async (req, res) => {
   try {
-    if (User.findAll({ where: User.email === req.body.email })){
-        res.status(404).json('This user exist');
-    }else {
-        const createUser = await User.create({
-            name: req.body.name,
-            lastname: req.body.lastname,
-            email: req.body.email,
-            password: req.body.password,
-            phone_number: req.body.phone_number,
-          });
-          res.json(createUser);
-    }
-    
+    const createUser = await User.create({
+      name: req.body.name,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      password: req.body.password,
+      phone_number: req.body.phone_number,
+    });
+    res.json(createUser);
   } catch (error) {
     console.log(error);
+    res.json(error);
   }
 };
 

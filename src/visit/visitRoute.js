@@ -1,10 +1,10 @@
 import express from "express";
-import { getVisits, postVisit } from "./visitController.js";
+import { deleteVisit, getVisits, postVisit, updateVisit } from "./visitController.js";
 const router = express.Router();
 
 router.get('/', getVisits);
 router.post('/', postVisit);
-router.patch('/');
-router.delete('/');
+router.patch('/:id', updateVisit);
+router.delete('/', deleteVisit);
 
 export default router;
