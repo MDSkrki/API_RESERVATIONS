@@ -28,7 +28,7 @@ const postVisit = async (req, res) => {
   }
 };
 
-// PATCH/UPDATE USER
+// Patch/Put Visit
 const updateVisit = async (req, res) => {
   try {
     if (await Visit.findByPk(req.params.id)) {
@@ -51,6 +51,7 @@ const updateVisit = async (req, res) => {
   }
 };
 
+//Delete Visit by id
 const deleteVisit = async (req, res) => {
   try {
     if (req.params.id) {
