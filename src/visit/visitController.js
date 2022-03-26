@@ -1,21 +1,25 @@
-import {Visit, Doctor, Patient} from "../shared/models.js";
+import { Visit, Doctor, Patient } from "../shared/models.js";
 
 const getVisit = async (req, res) => {
-    try {
-      const queryVisit = {};
-      if (req.query.id) queryVisit.id = req.query.id;
-      if (req.query.date) queryVisit.date = req.query.date;
-      if (req.query.description) queryVisit.description = req.query.description;
-      if (req.query.state) queryVisit.state = req.query.state;
-      res.json(
-        await Visit.findAll({
-          where: queryVisit, include: [{model: Doctor}, {model: Patient}]
-        })
-      );
-    } catch (error) {
-      res.json(error);
-    }
-  };
+  try {
+    const queryVisit = {};
+    if (req.query.id) queryVisit.id = req.query.id;
+    if (req.query.date) queryVisit.date = req.query.date;
+    if (req.query.description) queryVisit.description = req.query.description;
+    if (req.query.state) queryVisit.state = req.query.state;
+    if (req.query.idDoctor) queryVisit.idDoctor = req.query.idDoctor;
+    if (req.query.idPatient) queryVisit.idPatient = req.query.idPatient;
+    console.log(req.query.idDoctor, req.query.idPatient, " querys");
+    res.json(
+      await Visit.findAll({
+        where: queryVisit,
+        include: [{ model: Doctor }, { model: Patient }],
+      })
+    );
+  } catch (error) {
+    res.json(error);
+  }
+};
 
 // Post Visit
 const postVisit = async (req, res) => {
