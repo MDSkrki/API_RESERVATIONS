@@ -1,17 +1,22 @@
-import { Patient, User } from "../shared/models.js";
+import { Patient} from "../shared/models.js";
+import { hasher } from "../shared/services.js";
 
 const getPatient = async (req, res) => {
   try {
     const queryPatient = {};
     if (req.query.id) queryPatient.id = req.query.id;
+    if (req.query.name) queryPatient.name = req.query.name;
+    if (req.query.lastname) queryPatient.lastname = req.query.lastname;
+    if (req.query.email) queryPatient.email = req.query.email;
     if (req.query.sex) queryPatient.sex = req.query.sex;
     if (req.query.birth_date) queryPatient.birth_date = req.query.birth_date;
     if (req.query.age) queryPatient.age = req.query.age;
     if (req.query.dni) queryPatient.dni = req.query.dni;
     if (req.query.allergies) queryPatient.allergies = req.query.allergies;
     if (req.query.address) queryPatient.address = req.query.address;
+    if (req.query.phone_number) queryUser.phone_number = req.query.phone_number;
     res.json(
-      await Patient.findAll({ where: queryPatient, include: [{ model: User }] })
+      await Patient.findAll({ where: queryPatient })
     );
   } catch (error) {
     console.log(error);
@@ -21,6 +26,11 @@ const getPatient = async (req, res) => {
 const postPatient = async (req, res) => {
   try {
     const createPatient = await Patient.create({
+      name: req.body.name,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      password: await hasher(req.body.password),
+      phone_number: req.body.phone_number,
       sex: req.body.sex,
       birth_date: req.body.birth_date,
       age: req.body.age,
