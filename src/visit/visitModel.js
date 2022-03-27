@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import {connection} from "../../config/mysqlDB.js";
 
+
 class Visit extends Model {}
 
 const visitSchema = {
@@ -29,7 +30,5 @@ Visit.init(visitSchema, {
     sequelize: connection,
     modelName: 'Visit',
 });
-
-Visit.sync();
 
 export default Visit;

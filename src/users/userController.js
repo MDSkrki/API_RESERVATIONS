@@ -28,7 +28,7 @@ const postUser = async (req, res) => {
       name: req.body.name,
       lastname: req.body.lastname,
       email: req.body.email,
-      password: hasher(req.body.password),
+      password: await hasher(req.body.password),
       phone_number: req.body.phone_number,
     });
     res.json(createUser);

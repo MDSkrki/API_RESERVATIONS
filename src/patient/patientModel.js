@@ -1,6 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import { connection } from "../../config/mysqlDB.js";
 
+
 class Patient extends Model {}
 
 const patientSchema = {
@@ -33,5 +34,6 @@ Patient.init(patientSchema, {
     modelName: 'Patient',
 });
 
-Patient.sync();
+
+
 export default Patient;

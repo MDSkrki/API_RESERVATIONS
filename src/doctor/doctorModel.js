@@ -1,6 +1,7 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 import { connection } from "../../config/mysqlDB.js";
 
+
 class Doctor extends Model {}
 
 const doctorSchema = {
@@ -24,6 +25,8 @@ Doctor.init(doctorSchema, {
   sequelize: connection, // We need to pass the connection instance
   modelName: "Doctor", // We need to choose the model name
 });
-await Doctor.sync();
+
+
+
 
 export default Doctor;

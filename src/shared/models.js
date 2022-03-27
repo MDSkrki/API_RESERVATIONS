@@ -4,21 +4,28 @@ import Patient from "../patient/patientModel.js";
 import Visit from "../visit/visitModel.js";
 
 //Association 1:1 User with doctor
-User.hasOne(Doctor, { foreignKey: "idUser" }),
-  Doctor.hasOne(User, { foreignKey: "id" });
+//User.hasOne(Doctor, { foreignKey: "idUser" });
 
-//Association 1:1 User with Patient
-User.hasOne(Patient, { foreignKey: "idUser" });
-Patient.hasOne(User, { foreignKey: "id" });
+console.log('patata')
+
 
 //Association 1:n Visit with Patient
-Visit.hasOne(Patient, { foreignKey: "id" });
-Patient.hasMany(Visit, { foreignKey: "idPatient" });
+
+Doctor.belongsToMany(Patient, {through: Visit, foreignKey: "idDoctor" });
+Patient.belongsToMany(Doctor, { through: Visit, foreignKey: "idPatient"});
 
 
+Doctor.belongsTo(User, { foreignKey: "idUser" });
 //Assocation 1:n Visit with Doctor
-Visit.hasOne(Doctor, { foreignKey: "id" });
-Doctor.hasMany(Visit, { foreignKey: "idDoctor" });
 
+//Doctor.hasMany(Visit, { foreignKey: "idDoctor" });
+
+//Association 1:1 User with Patient
+Patient.belongsTo(User, { foreignKey: "idUser" });
+
+await User.sync()
+await Doctor.sync()
+await Patient.sync()
+await Visit.sync()
 
 export { User, Doctor, Visit, Patient };

@@ -39,6 +39,5 @@ User.init(userSchema, {
   modelName: "User", // We need to choose the model name
 });
 
-await User.sync();
 
 export default User;
