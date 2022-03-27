@@ -1,8 +1,10 @@
 import express from "express";
-import env from "dotenv";
-import {dbConnection} from "./config/mysqlDB.js";
-import Doctor from "./src/doctor/doctorModel.js";
-import User from "./src/users/userModel.js";
+import env from "dotenv"; // Environment vars
+import { dbConnection } from "./config/mysqlDB.js"; // DB connection with sequelize
+import routerUser from "./src/users/userRoute.js"; // User routes
+import routerDoctor from "./src/doctor/doctorRoute.js"; // Doctor routes
+import routerVisit from './src/visit/visitRoute.js';
+import routerPatient from './src/patient/patientRoute.js';
 
 const app = express();
 
@@ -11,25 +13,16 @@ env.config();
 
 //Parse body to JSON
 app.use(express.json());
-app.get('/doctor', async (req,res) => {
-    const query = await Doctor.findAll({
-        include: [{model: User}]
-    })
-    res.json(query)
-});
-// Post user
-app.post('/user', async (req,res) => {
-    const createUser = await User.create({
-            name: "mihai",
-            lastname: "daniel",
-            email: "mihai@api.com",
-            password: "mihai",
-            phone_number: "687543223"
-    })
-res.json(createUser)
-})
+
+//Endpoints
+app.use("/user", routerUser);
+app.use("/doctor", routerDoctor);
+app.use('/visit', routerVisit);
+app.use('/patient', routerPatient);
 
 // Express port definition and server up
 app.set("port", process.env.PORT);
-app.listen(app.get("port"), () => console.log(`Server up at ${process.env.PORT}`));
+app.listen(app.get("port"), () =>
+  console.log(`Server up at ${process.env.PORT}`)
+);
 dbConnection();
