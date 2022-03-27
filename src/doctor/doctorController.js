@@ -1,4 +1,5 @@
-import {Doctor, User} from "../shared/models.js";
+import {Doctor} from "../shared/models.js";
+import { hasher } from "../shared/services.js";
 
 
 //Get doctor by all fields with User model.
@@ -6,9 +7,13 @@ const getDoctor = async (req, res) => {
   try {
     const queryDoctor = {};
     if (req.query.id) queryDoctor.id = req.query.id;
+    if (req.query.name) queryDoctor.name = req.query.name;
+    if (req.query.lastname) queryDoctor.lastname = req.query.lastname;
+    if (req.query.email) queryDoctor.email = req.query.email;
+    if (req.query.phone_number) queryDoctor.phone_number = req.query.phone_number;
     if (req.query.specialty) queryDoctor.specialty = req.query.specialty;
     if (req.query.schedule) queryDoctor.schedule = req.query.schedule;
-    res.json(await Doctor.findAll({ where: queryDoctor, include: [{model: User}] }));
+    res.json(await Doctor.findAll({ where: queryDoctor}));
   } catch (error) {
     res.json(error);
   }
@@ -18,9 +23,13 @@ const getDoctor = async (req, res) => {
 const postDoctor = async (req, res) => {
   try {
     const createDoctor = await Doctor.create({
+      name: req.body.name,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      password: await hasher(req.body.password),
+      phone_number: req.body.phone_number,
       specialty: req.body.specialty,
       schedule: req.body.schedule,
-      idUser: req.body.idUser,
     });
     res.json(createDoctor);
   } catch (error) {
