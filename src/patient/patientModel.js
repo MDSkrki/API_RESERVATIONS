@@ -35,18 +35,23 @@ const patientSchema = {
     },
     birth_date: {
         type: DataTypes.STRING,
+        allowNull: false,
     },
     age: {
         type: DataTypes.INTEGER,
+        allowNull: false,
     },
     dni: {
         type: DataTypes.STRING,
+        allowNull: false,
     },
     allergies: {
         type: DataTypes.STRING,
+        allowNull: false,
     },
     address: {
         type: DataTypes.STRING,
+        allowNull: false,
     },
 }
 
