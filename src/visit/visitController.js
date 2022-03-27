@@ -9,7 +9,6 @@ const getVisit = async (req, res) => {
     if (req.query.state) queryVisit.state = req.query.state;
     if (req.query.idDoctor) queryVisit.idDoctor = req.query.idDoctor;
     if (req.query.idPatient) queryVisit.idPatient = req.query.idPatient;
-    console.log(req.query.idDoctor, req.query.idPatient, " querys");
     res.json(
       await Visit.findAll({
         where: queryVisit,
