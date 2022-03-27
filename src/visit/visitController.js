@@ -3,6 +3,8 @@ import { Visit, Doctor, Patient } from "../shared/models.js";
 const getVisit = async (req, res) => {
   try {
     const queryVisit = {};
+    const doctor = Doctor.findByPk(1);
+    const patient = Patient.findByPk(1);
     if (req.query.id) queryVisit.id = req.query.id;
     if (req.query.date) queryVisit.date = req.query.date;
     if (req.query.description) queryVisit.description = req.query.description;
@@ -17,6 +19,7 @@ const getVisit = async (req, res) => {
       })
     );
   } catch (error) {
+    console.log(error);
     res.json(error);
   }
 };
@@ -33,6 +36,7 @@ const postVisit = async (req, res) => {
     });
     res.json(createVisit);
   } catch (error) {
+    console.log(error);
     res.json(error);
   }
 };
