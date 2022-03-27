@@ -53,6 +53,10 @@ const patientSchema = {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    isLogged: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    }
 }
 
 Patient.init(patientSchema, {

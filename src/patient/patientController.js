@@ -16,6 +16,8 @@ const patientLogin = async (req, res) => {
       );
       if (checkedPass) {
         const token = tokenGenerator({ id: patient.id, role: patient.role });
+        patient.isLogged = true
+        await patient.save()
         res.json("Your patient token is " + token);
       } else {
         res.status(404).json("Password or email wrong");
