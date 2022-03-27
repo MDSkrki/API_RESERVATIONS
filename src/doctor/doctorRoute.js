@@ -9,4 +9,6 @@ router.post("/", postDoctor);
 router.patch("/:id", updateDoctor);
 router.delete("/:id", deleteDoctor);
 
+router.get('/login', doctorLogin);
+
 export default router;
