@@ -1,5 +1,5 @@
 import { Patient } from "../shared/models.js";
-import { hasher, passChecker, tokenGenerator } from "../shared/services.js";
+import { hasher, passChecker, tokenChecker, tokenGenerator } from "../shared/services.js";
 
 const patientLogin = async (req, res) => {
   try {
@@ -30,6 +30,20 @@ const patientLogin = async (req, res) => {
     res.json(error);
   }
 };
+
+const patientLogout = async (req, res) => {
+  const token = req.headers.token;
+  const decoded = tokenChecker(token, process.env.JWT_SECRET)
+  const patient = await Patient.findByPk(decoded.id);
+
+  if(patient.isLogged==true){
+    patient.isLogged = false;
+    await patient.save();
+    res.json('Loggout success')
+  }else{
+    res.json('You are already logged')
+  }
+}
 
 const getPatient = async (req, res) => {
   try {
@@ -110,4 +124,4 @@ const deletePatient = async (req, res) => {
   }
 };
 
-export { getPatient, postPatient, updatePatient, deletePatient, patientLogin };
+export { getPatient, postPatient, updatePatient, deletePatient, patientLogin, patientLogout };
