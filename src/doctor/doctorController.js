@@ -1,5 +1,5 @@
-import {Doctor} from "../shared/models.js";
-import { hasher } from "../shared/services.js";
+import { Doctor } from "../shared/models.js";
+import { hasher, passChecker, tokenGenerator } from "../shared/services.js";
 
 
 //Get doctor by all fields with User model.
@@ -13,7 +13,7 @@ const getDoctor = async (req, res) => {
     if (req.query.phone_number) queryDoctor.phone_number = req.query.phone_number;
     if (req.query.specialty) queryDoctor.specialty = req.query.specialty;
     if (req.query.schedule) queryDoctor.schedule = req.query.schedule;
-    res.json(await Doctor.findAll({ where: queryDoctor}));
+    res.json(await Doctor.findAll({ where: queryDoctor }));
   } catch (error) {
     res.json(error);
   }
@@ -71,4 +71,30 @@ const deleteDoctor = async (req, res) => {
   }
 };
 
-export { getDoctor, postDoctor, updateDoctor, deleteDoctor };
+const doctorLogin = async (req, res) => {
+  try {
+    const doctor = await Doctor.findOne({
+      where: {
+        email: req.headers.email,
+      }
+    });
+    if (doctor != null) {
+      const checkedPass = await passChecker(req.headers.password, doctor.password);
+      if (checkedPass) {
+        const token = tokenGenerator({ id: doctor.id, role: doctor.role });
+        console.log(token);
+        res.json(token);
+      } else {
+        res.status(403).json('Password is wrong');
+      };
+    } else {
+      res.status(401).json('Email not found');
+    }
+
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+}
+
+export { getDoctor, postDoctor, updateDoctor, deleteDoctor, doctorLogin };
