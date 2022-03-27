@@ -1,25 +1,55 @@
 import { Doctor } from "../shared/models.js";
-import { hasher, passChecker, tokenGenerator } from "../shared/services.js";
+import { hasher, passChecker, tokenGenerator, tokenChecker } from "../shared/services.js";
 
-asdsadsadas
 const doctorLogin = async (req, res) => {
   try {
     const doctor = await Doctor.findOne({
       where: {
-        email : req.headers.email,
-      }
+        email: req.headers.email,
+      },
     });
-    const checkedPass = await passChecker(req.headers.password, doctor.password);
-    if(checkedPass) {
-      const token = tokenGenerator({id: doctor.id, role: doctor.role});
-      console.log(token);
-      res.json(token);
-    };
+    if (doctor != null) {
+      const checkedPass = await passChecker(
+        req.headers.password,
+        doctor.password
+      );
+      if (checkedPass) {
+        const token = tokenGenerator({ id: doctor.id, role: doctor.role });
+        doctor.isLogged = true
+        await doctor.save()
+        res.json("Your doctor token is " + token);
+      } else {
+        res.status(404).json("Password or email wrong");
+      }
+    } else {
+      res.status(404).json("Password or email wrong");
+    }
   } catch (error) {
     console.log(error);
     res.json(error);
   }
+};
+
+
+const doctorLogout = async (req, res) => {
+  try{
+    const token = req.headers.token;
+    const decoded = tokenChecker(token, process.env.JWT_SECRET)
+    const doctor = await Doctor.findByPk(decoded.id);
+
+    if(doctor.isLogged==true){
+      doctor.isLogged = false;
+      await doctor.save();
+      res.json('Loggout success')
+    }else{
+      res.json('You are already logged')
+    }
+  }catch(error){
+    console.log(error)
+  }
+  
 }
+
 
 //Get doctor by all fields with User model.
 const getDoctor = async (req, res) => {
@@ -90,34 +120,4 @@ const deleteDoctor = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-export { getDoctor, postDoctor, updateDoctor, deleteDoctor, doctorLogin };
-=======
-const doctorLogin = async (req, res) => {
-  try {
-    const doctor = await Doctor.findOne({
-      where: {
-        email: req.headers.email,
-      }
-    });
-    if (doctor != null) {
-      const checkedPass = await passChecker(req.headers.password, doctor.password);
-      if (checkedPass) {
-        const token = tokenGenerator({ id: doctor.id, role: doctor.role });
-        console.log(token);
-        res.json(token);
-      } else {
-        res.status(403).json('Password is wrong');
-      };
-    } else {
-      res.status(401).json('Email not found');
-    }
-
-  } catch (error) {
-    console.log(error);
-    res.json(error);
-  }
-}
-
-export { getDoctor, postDoctor, updateDoctor, deleteDoctor, doctorLogin };
->>>>>>> da7f09c8fb89cf9cab802bcc8c8407b30495f5da
+export { getDoctor, postDoctor, updateDoctor, deleteDoctor, doctorLogin, doctorLogout };

@@ -9,7 +9,6 @@ const patientLogin = async (req, res) => {
       },
     });
     if (patient != null) {
-      console.log("patieeeeeeeeeeeeeeent");
       const checkedPass = await passChecker(
         req.headers.password,
         patient.password
@@ -32,6 +31,8 @@ const patientLogin = async (req, res) => {
 };
 
 const patientLogout = async (req, res) => {
+ 
+ try{
   const token = req.headers.token;
   const decoded = tokenChecker(token, process.env.JWT_SECRET)
   const patient = await Patient.findByPk(decoded.id);
@@ -43,6 +44,10 @@ const patientLogout = async (req, res) => {
   }else{
     res.json('You are already logged')
   }
+ }catch(error){
+   console.log(error)
+ }
+  
 }
 
 const getPatient = async (req, res) => {

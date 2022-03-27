@@ -40,6 +40,10 @@ const doctorSchema = {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  isLogged: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+}
 };
 
 Doctor.init(doctorSchema, {
