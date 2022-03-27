@@ -4,11 +4,11 @@ import Patient from "../patient/patientModel.js";
 import Visit from "../visit/visitModel.js";
 
 // Association n:m between Patient and Doctors through Visits
-Doctor.belongsToMany(Patient, {through: Visit, foreignKey: "idDoctor" });
-Patient.belongsToMany(Doctor, { through: Visit, foreignKey: "idPatient"});
+Doctor.belongsToMany(Patient, {through: {model: Visit, unique: false}, foreignKey: "idDoctor"});
+Patient.belongsToMany(Doctor, {through: {model: Visit, unique: false}, foreignKey: "idPatient"});
 
-Visit.hasOne(Doctor, {foreignKey: 'id'});
-Visit.hasOne(Patient, {foreignKey: 'id'});
+Visit.belongsTo(Doctor, {foreignKey: 'idDoctor'});
+Visit.belongsTo(Patient, {foreignKey: 'idPatient'});
 
 //Loading the models together with associations before use through API
 await Doctor.sync()

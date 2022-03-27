@@ -5,6 +5,12 @@ import {connection} from "../../config/mysqlDB.js";
 class Visit extends Model {}
 
 const visitSchema = {
+    id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     date: {
         type: DataTypes.DATE,
         allowNull: false,
@@ -19,10 +25,12 @@ const visitSchema = {
     idDoctor: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        unique: false,
     },
     idPatient: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        unique: false,
     }
 }
 
