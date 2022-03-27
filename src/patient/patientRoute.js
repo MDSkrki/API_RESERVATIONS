@@ -1,8 +1,10 @@
 import express from "express";
-import {deletePatient, getPatient, postPatient, updatePatient} from './patientController.js';
+import {deletePatient, getPatient, postPatient, updatePatient,patientLogin, patientLogout} from './patientController.js';
 const router = express.Router();
 
 router.get('/', getPatient);
+router.get('/login', patientLogin)
+router.get('/logout', patientLogout)
 router.post('/', postPatient);
 router.patch("/:id", updatePatient);
 router.delete("/:id", deletePatient);
