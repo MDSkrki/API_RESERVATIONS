@@ -1,5 +1,33 @@
-import { Patient} from "../shared/models.js";
-import { hasher } from "../shared/services.js";
+import { Patient } from "../shared/models.js";
+import { hasher, passChecker, tokenGenerator } from "../shared/services.js";
+
+const patientLogin = async (req, res) => {
+  try {
+    const patient = await Patient.findOne({
+      where: {
+        email: req.headers.email,
+      },
+    });
+    if (patient != null) {
+      console.log("patieeeeeeeeeeeeeeent");
+      const checkedPass = await passChecker(
+        req.headers.password,
+        patient.password
+      );
+      if (checkedPass) {
+        const token = tokenGenerator({ id: patient.id, role: patient.role });
+        res.json("Your patient token is " + token);
+      } else {
+        res.status(404).json("Password or email wrong");
+      }
+    } else {
+      res.status(404).json("Password or email wrong");
+    }
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+};
 
 const getPatient = async (req, res) => {
   try {
@@ -15,9 +43,7 @@ const getPatient = async (req, res) => {
     if (req.query.allergies) queryPatient.allergies = req.query.allergies;
     if (req.query.address) queryPatient.address = req.query.address;
     if (req.query.phone_number) queryUser.phone_number = req.query.phone_number;
-    res.json(
-      await Patient.findAll({ where: queryPatient })
-    );
+    res.json(await Patient.findAll({ where: queryPatient }));
   } catch (error) {
     console.log(error);
     res.json(error);
@@ -56,7 +82,7 @@ const updatePatient = async (req, res) => {
           age: req.body.age,
           dni: req.body.dni,
           allergies: req.body.allergies,
-          address: req.body.address
+          address: req.body.address,
         },
         { where: { id: req.params.id } }
       );
@@ -82,4 +108,4 @@ const deletePatient = async (req, res) => {
   }
 };
 
-export { getPatient, postPatient, updatePatient, deletePatient };
+export { getPatient, postPatient, updatePatient, deletePatient, patientLogin };

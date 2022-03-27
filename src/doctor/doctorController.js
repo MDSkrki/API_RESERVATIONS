@@ -1,6 +1,25 @@
 import {Doctor} from "../shared/models.js";
-import { hasher } from "../shared/services.js";
+import { hasher, passChecker, tokenGenerator } from "../shared/services.js";
 
+
+const doctorLogin = async (req, res) => {
+  try {
+    const doctor = await Doctor.findOne({
+      where: {
+        email : req.headers.email,
+      }
+    });
+    const checkedPass = await passChecker(req.headers.password, doctor.password);
+    if(checkedPass) {
+      const token = tokenGenerator({id: doctor.id, role: doctor.role});
+      console.log(token);
+      res.json(token);
+    };
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+}
 
 //Get doctor by all fields with User model.
 const getDoctor = async (req, res) => {
@@ -71,4 +90,4 @@ const deleteDoctor = async (req, res) => {
   }
 };
 
-export { getDoctor, postDoctor, updateDoctor, deleteDoctor };
+export { getDoctor, postDoctor, updateDoctor, deleteDoctor, doctorLogin };
