@@ -8,7 +8,7 @@ import {
   deleteDoctor,
 } from "./doctorController.js";
 
-router.get("/", auth('Doctor'), getDoctor);
+router.get("/", getDoctor);
 router.post("/register", postDoctor);  // todos los endpoints doctor
 router.patch("/:id", updateDoctor);
 router.delete("/:id", deleteDoctor);

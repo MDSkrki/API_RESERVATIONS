@@ -8,7 +8,7 @@ const patientSchema = {
     type: DataTypes.STRING,
   },
   birth_date: {
-    type: DataTypes.STRING,
+    type: DataTypes.DATEONLY,
     allowNull: false,
   },
   age: {

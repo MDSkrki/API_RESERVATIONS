@@ -1,54 +1,10 @@
-import { Patient, User } from "../shared/models.js";
-import { hasher, passChecker, tokenChecker, tokenGenerator } from "../shared/services.js";
-
-const patientLogin = async (req, res) => {
-  try {
-    const patient = await Patient.findOne({
-      where: {
-        email: req.headers.email,
-      },
-    });
-    if (patient != null) {
-      const checkedPass = await passChecker(
-        req.headers.password,
-        patient.password
-      );
-      if (checkedPass) {
-        const token = tokenGenerator({ id: patient.id, role: patient.role });
-        patient.isLogged = true
-        await patient.save()
-        res.json("Your patient token is " + token);
-      } else {
-        res.status(404).json("Password or email wrong");
-      }
-    } else {
-      res.status(404).json("Password or email wrong");
-    }
-  } catch (error) {
-    console.log(error);
-    res.json(error);
-  }
-};
-
-const patientLogout = async (req, res) => {
- 
- try{
-  const token = req.headers.token;
-  const decoded = tokenChecker(token, process.env.JWT_SECRET)
-  const patient = await Patient.findByPk(decoded.id);
-
-  if(patient.isLogged==true){
-    patient.isLogged = false;
-    await patient.save();
-    res.json('Loggout success')
-  }else{
-    res.json('You are already logged')
-  }
- }catch(error){
-   console.log(error)
- }
-  
-}
+import { Patient, User, Visit, Doctor } from "../shared/models.js";
+import {
+  hasher,
+  passChecker,
+  tokenChecker,
+  tokenGenerator,
+} from "../shared/services.js";
 
 const getPatient = async (req, res) => {
   try {
@@ -64,12 +20,83 @@ const getPatient = async (req, res) => {
     if (req.query.allergies) queryPatient.allergies = req.query.allergies;
     if (req.query.address) queryPatient.address = req.query.address;
     if (req.query.phone_number) queryUser.phone_number = req.query.phone_number;
-    res.json(await Patient.findAll({ where: queryPatient, include: {model: User}}));
+    res.json(
+      await Patient.findAll({ where: queryPatient, include: { model: User } })
+    );
   } catch (error) {
     console.log(error);
     res.json(error);
   }
 };
+//---------------------- Project query ------------------------------------------
+//get visit only with the token user, state pendins or anything else
+const getVisit = async (req, res) => {
+  try {
+    const decoded = tokenChecker(req.headers.token, process.env.JWT_SECRET);
+    const queryVisit = {};
+    if (req.query.date) queryVisit.date = req.query.date;
+    if (req.query.state) queryVisit.state = req.query.state;
+    if (req.query.idDoctor) queryVisit.idDoctor = req.query.idDoctor;
+    queryVisit.idPatient = decoded.id;
+    if (decoded) {
+      res.json(
+        await Visit.findAll({
+          where: queryVisit,
+          include: [
+            { model: Doctor },
+            /*just to see if works ->*/ { model: Patient },
+          ],
+        })
+      );
+    } else {
+      res.status(403).json("token not valid");
+    }
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+};
+const postVisit = async (req, res) => {
+  try {
+    const decoded = tokenChecker(req.headers.token, process.env.JWT_SECRET);
+    const createVisit = await Visit.create({
+      date: req.body.date,
+      description: req.body.description,
+      state: 'pending',
+      idDoctor: req.body.idDoctor,
+      idPatient: decoded.id,
+    });
+    res.json(createVisit);
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+};
+
+const cancelVisit = async (req, res) => {
+  try {
+    const decoded = tokenChecker(req.headers.token, process.env.JWT_SECRET);
+    if (decoded) {
+      const visitFound = await Visit.findByPk(req.params.id);
+      if (visitFound.state === "finished" || visitFound.state === "cancelled") {
+        throw Error("This visit is finished or cancelled");
+      }
+      await Visit.update(
+        {
+          state: "cancelled",
+        },
+        { where: { idPatient: decoded.id, id: req.params.id } }
+      );
+      res.status(200).json("Cancelled Visit id = " + req.params.id);
+    } else {
+      res.status(404).json("Patient doesn't exist");
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.json(error.message);
+  }
+};
+
 const postPatient = async (req, res) => {
   try {
     const createUser = await User.create({
@@ -78,7 +105,7 @@ const postPatient = async (req, res) => {
       email: req.body.email,
       password: await hasher(req.body.password),
       phone_number: req.body.phone_number,
-      role: 'Patient'
+      role: "Patient",
     });
     const createPatient = await Patient.create({
       sex: req.body.sex,
@@ -87,7 +114,7 @@ const postPatient = async (req, res) => {
       dni: req.body.dni,
       allergies: req.body.allergies,
       address: req.body.address,
-      idUser: createUser.id
+      idUser: createUser.id,
     });
     res.json(createPatient);
   } catch (error) {
@@ -132,4 +159,12 @@ const deletePatient = async (req, res) => {
   }
 };
 
-export { getPatient, postPatient, updatePatient, deletePatient };
+export {
+  getPatient,
+  postPatient,
+  updatePatient,
+  deletePatient,
+  getVisit,
+  cancelVisit,
+  postVisit
+};

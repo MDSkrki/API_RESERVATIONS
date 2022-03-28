@@ -2,9 +2,9 @@ import express from "express";
 import { deleteVisit, getVisit, postVisit, updateVisit } from "./visitController.js";
 const router = express.Router();
 
-router.get('/', getVisit); // logica de paciente que solo vea las suyas, y doctor todo 
-router.post('/', postVisit); // logica solo puede hacer visita para el mismo, auth Doctor, patient
-router.patch('/:id', updateVisit); //auth Doctor, Patient
+router.get('/', getVisit); //auth doctor todo 
+router.post('/', postVisit); // can do it patients and doctors
+router.patch('/:id', updateVisit); //auth Doctor
 router.delete('/:id', deleteVisit); //auth Doctor
 
 export default router;
