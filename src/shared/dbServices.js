@@ -1,4 +1,4 @@
-import { Doctor, Patient } from "./models.js";
+import { Doctor, Patient, Visit } from "./models.js";
 
 const logCheck = async (role, id) => {
     if(role == 'patient') {
@@ -12,4 +12,13 @@ const logCheck = async (role, id) => {
     return false
 }
 
-export {logCheck}
+const visitCreator = async (patient, doctor, body) => {
+    const visit = await Visit.create({
+        description: body.description,
+        state: body.state,
+        idDoctor: doctor.id,
+        idPatient: patient.id
+    })
+}
+
+export {logCheck, visitCreator}
