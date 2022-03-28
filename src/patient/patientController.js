@@ -52,8 +52,9 @@ const patientLogout = async (req, res) => {
 
 const getPatient = async (req, res) => {
   try {
+    const decoded = tokenChecker(req.headers.token, process.env.JWT_SECRET); //decoded.id == paciente que está accediendo aquí
     const queryPatient = {};
-    if (req.query.id) queryPatient.id = req.query.id;
+    queryPatient.id = decoded.id;
     if (req.query.name) queryPatient.name = req.query.name;
     if (req.query.lastname) queryPatient.lastname = req.query.lastname;
     if (req.query.email) queryPatient.email = req.query.email;
