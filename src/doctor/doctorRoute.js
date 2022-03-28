@@ -6,14 +6,10 @@ import {
   postDoctor,
   updateDoctor,
   deleteDoctor,
-  doctorLogin,
-  doctorLogout
 } from "./doctorController.js";
 
-router.get("/", auth('doctor'), getDoctor);
-router.get("/login", doctorLogin);
-router.get("/logout", doctorLogout)
-router.post("/", postDoctor);
+router.get("/", auth('Doctor'), getDoctor);
+router.post("/register", postDoctor);  // todos los endpoints doctor
 router.patch("/:id", updateDoctor);
 router.delete("/:id", deleteDoctor);
 
