@@ -24,13 +24,16 @@ const userSchema = {
   },
   role: {
     type: DataTypes.STRING,
-    allowNull: false,
-    defaultValue: "patient",
+    
   },
   phone_number: {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  isLogged: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  }
 };
 
 User.init(userSchema, {
