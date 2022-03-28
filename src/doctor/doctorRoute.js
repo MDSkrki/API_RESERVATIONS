@@ -1,4 +1,5 @@
 import express from "express";
+import { auth } from "../shared/middlewares.js";
 const router = express.Router();
 import {
   getDoctor,
@@ -9,7 +10,7 @@ import {
   doctorLogout
 } from "./doctorController.js";
 
-router.get("/", getDoctor);
+router.get("/", auth('doctor'), getDoctor);
 router.get("/login", doctorLogin);
 router.get("/logout", doctorLogout)
 router.post("/", postDoctor);
