@@ -1,4 +1,4 @@
-import { Patient } from "../shared/models.js";
+import { Patient, User } from "../shared/models.js";
 import { hasher, passChecker, tokenChecker, tokenGenerator } from "../shared/services.js";
 
 const patientLogin = async (req, res) => {
@@ -64,7 +64,7 @@ const getPatient = async (req, res) => {
     if (req.query.allergies) queryPatient.allergies = req.query.allergies;
     if (req.query.address) queryPatient.address = req.query.address;
     if (req.query.phone_number) queryUser.phone_number = req.query.phone_number;
-    res.json(await Patient.findAll({ where: queryPatient }));
+    res.json(await Patient.findAll({ where: queryPatient, include: {model: User}}));
   } catch (error) {
     console.log(error);
     res.json(error);
@@ -72,19 +72,22 @@ const getPatient = async (req, res) => {
 };
 const postPatient = async (req, res) => {
   try {
-    const createPatient = await Patient.create({
+    const createUser = await User.create({
       name: req.body.name,
       lastname: req.body.lastname,
       email: req.body.email,
       password: await hasher(req.body.password),
       phone_number: req.body.phone_number,
+      role: 'Patient'
+    });
+    const createPatient = await Patient.create({
       sex: req.body.sex,
       birth_date: req.body.birth_date,
       age: req.body.age,
       dni: req.body.dni,
       allergies: req.body.allergies,
       address: req.body.address,
-      idUser: req.body.idUser,
+      idUser: createUser.id
     });
     res.json(createPatient);
   } catch (error) {
@@ -129,4 +132,4 @@ const deletePatient = async (req, res) => {
   }
 };
 
-export { getPatient, postPatient, updatePatient, deletePatient, patientLogin, patientLogout };
+export { getPatient, postPatient, updatePatient, deletePatient };
