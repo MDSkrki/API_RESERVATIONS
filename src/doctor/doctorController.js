@@ -14,6 +14,7 @@ const getDoctor = async (req, res) => {
     if (req.query.schedule) queryDoctor.schedule = req.query.schedule;
     res.json(await Doctor.findAll({ where: queryDoctor, include: { model: User } }));
   } catch (error) {
+    console.log(error);
     res.json(error);
   }
 };
@@ -27,12 +28,12 @@ const postDoctor = async (req, res) => {
       email: emailValidator(req.body.email),
       password: await hasher(req.body.password),
       phone_number: req.body.phone_number,
-      role: 'Doctor'
+      role: 'Doctor',
     });
     const createDoctor = await Doctor.create({
       specialty: req.body.specialty,
       schedule: req.body.schedule,
-      idUser: createUser.id
+      idUser: createUser.id,
     });
     res.json(createDoctor);
   } catch (error) {
@@ -50,7 +51,7 @@ const updateDoctor = async (req, res) => {
           specialty: req.body.specialty,
           schedule: req.body.schedule,
         },
-        { where: { id: req.params.id } }
+        { where: { id: req.params.id } },
       );
       res.status(200).json("Updated id = " + req.params.id);
     } else {
