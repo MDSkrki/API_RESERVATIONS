@@ -7,9 +7,9 @@ const router = express.Router();
 
 router.use(auth('Doctor'));
 
-router.get("/", getDoctor);
+router.get("/", auth('Doctor'), getDoctor);
 router.post("/register", postDoctor);
-router.patch("/:id", updateDoctor);
-router.delete("/:id", deleteDoctor);
+router.patch("/:id", auth('Doctor'), updateDoctor);
+router.delete("/:id", auth('Doctor'), deleteDoctor);
 
 export default router;
