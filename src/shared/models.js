@@ -7,8 +7,8 @@ import Visit from "../visit/visitModel.js";
 Doctor.belongsToMany(Patient, {through: Visit, foreignKey: "idDoctor" });
 Patient.belongsToMany(Doctor, { through: Visit, foreignKey: "idPatient"});
 
-Visit.hasOne(Doctor, {foreignKey: 'id'});
-Visit.hasOne(Patient, {foreignKey: 'id'});
+// Visit.belongsTo(Doctor);
+// Visit.belongsTo(Patient);
 
 //Loading the models together with associations before use through API
 await Doctor.sync()
