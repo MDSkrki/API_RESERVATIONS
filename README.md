@@ -2,7 +2,7 @@
 
 ![logo clinica dental](https://vinti7.com/wp-content/uploads/2016/05/logos-de-dentistas-35.jpg)
 
-[Click aquí para leer el README en Español](./README.md) 
+[Click aquí para leer el README en Español](./README-es.md) 
 
 ## Table of Contents
 - [API Dental Clinic Appointments](#api-dental-clinic-appointments)
