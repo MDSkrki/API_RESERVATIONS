@@ -5,8 +5,6 @@ import routerUser from "./src/user/userRoute.js"; // User routes
 import routerDoctor from "./src/doctor/doctorRoute.js"; // Doctor routes
 import routerVisit from './src/visit/visitRoute.js';
 import routerPatient from './src/patient/patientRoute.js';
-import swDocument from "./config/openapi.js"
-import swaggerUi from "swagger-ui-express";
 
 const app = express();
 
@@ -18,7 +16,7 @@ app.use(express.json());
 
 const myGithub = "https://github.com/AlexMonPe/API_RESERVATIONS/blob/master/README.md"
 const text = "documentation"
-// ENDPOINTS
+// Welcome Endpoint
 app.get('/', (req,res)=> res.send('Welcome to our API_reservations, read ' + text.link(myGithub) + ' to start'))
 //Endpoints
 app.use("/user", routerUser);
@@ -26,8 +24,7 @@ app.use("/doctor", routerDoctor); // meter aqui el auth Doctor
 app.use('/visit', routerVisit);
 app.use('/patient', routerPatient);
 app.use('/user', routerUser);
-//Documentation with swagger
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swDocument));
+
 
 // Express port definition and server up
 app.set("port", process.env.PORT);
