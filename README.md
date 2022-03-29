@@ -241,8 +241,8 @@ Para poder consumir el API es necesario lo siguiente:
 
 # Autores 🤟
 
-* const Mihai = () => https://github.com/MDSkrki ❌
-* const Alejandro = () => https://github.com/AlexMonPe ⭕
+* const Mihai = (Portfolio) => https://github.com/MDSkrki ❌
+* const Alejandro = (Portfolio) => https://github.com/AlexMonPe ⭕
 
 # Como ayudar 🤝
   
