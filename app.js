@@ -5,6 +5,8 @@ import routerUser from "./src/user/userRoute.js"; // User routes
 import routerDoctor from "./src/doctor/doctorRoute.js"; // Doctor routes
 import routerVisit from './src/visit/visitRoute.js';
 import routerPatient from './src/patient/patientRoute.js';
+import swDocument from "./config/openapi.js"
+import swaggerUi from "swagger-ui-express";
 
 const app = express();
 
@@ -20,6 +22,8 @@ app.use("/doctor", routerDoctor); // meter aqui el auth Doctor
 app.use('/visit', routerVisit);
 app.use('/patient', routerPatient);
 app.use('/user', routerUser);
+//Documentation with swagger
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swDocument));
 
 // Express port definition and server up
 app.set("port", process.env.PORT);
