@@ -1,7 +1,7 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import { connection } from "../../config/mysqlDB.js";
 
-class User extends Model {}
+class User extends Model { }
 
 const userSchema = {
   // Model attributes are defined here
@@ -16,7 +16,7 @@ const userSchema = {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   password: {
     type: DataTypes.STRING,
@@ -24,7 +24,6 @@ const userSchema = {
   },
   role: {
     type: DataTypes.STRING,
-    
   },
   phone_number: {
     type: DataTypes.STRING,
