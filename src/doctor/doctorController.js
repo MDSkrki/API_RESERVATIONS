@@ -1,3 +1,4 @@
+import isEmail from "validator/lib/isEmail";
 import { Doctor, User } from "../shared/models.js";
 import { hasher } from "../shared/services.js";
 
@@ -24,7 +25,7 @@ const postDoctor = async (req, res) => {
     const createUser = await User.create({
       name: req.body.name,
       lastname: req.body.lastname,
-      email: req.body.email,
+      email: isEmail(req.body.email) ,
       password: await hasher(req.body.password),
       phone_number: req.body.phone_number,
       role: 'Doctor'
