@@ -145,7 +145,7 @@ Post Visit as Patient
 
 ## Doctor
 
-```
+```json 
 {
       "name": "Yolanda",
       "lastname": "perez",
@@ -160,10 +160,10 @@ Post Visit as Patient
 Para cualquiera de los endpoints de doctor es necesario es necesario tener role de Doctor(Admin) e introducir el token
 `router.use(auth('Doctor'))`
 
-* get `/doctor` Devuelve todos los doctores de la DB
-* post `/register` Es necesario introducir en el body el JSON de ejemplo para crear un doctor y a la vez su User asociado, se asigna automáticamente el role de doctor
-* patch `/doctor/:id` Introduciento el id por path params(URI) puede modificar la información de cualquier doctor.
-* delete `/doctor/:id` Introduciento el id por path params(URI) puede eliminar la información de cualquier doctor.
+* _GET_ `/doctor` Devuelve todos los doctores de la DB
+* _POST_ `/register` Es necesario introducir en el body el JSON de ejemplo para crear un doctor y a la vez su User asociado, se asigna automáticamente el role de doctor
+* _PATCH_ `/doctor/:id` Introduciento el id por path params(URI) puede modificar la información de cualquier doctor.
+* _DELETE_ `/doctor/:id` Introduciento el id por path params(URI) puede eliminar la información de cualquier doctor.
 
 ## Visit
 ```json
@@ -177,10 +177,10 @@ Para cualquiera de los endpoints de doctor es necesario es necesario tener role 
 ```
 Sólo los doctores pueden acceder a estos endpoints poniendo el token en headers.
 
-* get `/visit` Devuelve todas las visitas de la DB
-* post `/visit` Es necesario introducir en el body el JSON de ejemplo para crear una visita.
-* patch `/visit/:id` Introduciento el id por path params(URI) puede modificar la información de cualquier visita.
-* delete `/visit/:id` Introduciento el id por path params(URI) puede eliminar la información de cualquier visita.
+* _GET_ `/visit` Devuelve todas las visitas de la DB
+* _POST_ `/visit` Es necesario introducir en el body el JSON de ejemplo para crear una visita.
+* _PATCH_ `/visit/:id` Introduciento el id por path params(URI) puede modificar la información de cualquier visita.
+* _DELETE_ `/visit/:id` Introduciento el id por path params(URI) puede eliminar la información de cualquier visita.
 
 
 # Variables de entorno 🥑
@@ -194,7 +194,7 @@ DB_USERNAME=[userDataBase]
 DB_PASSWORD=[userPasswordDataBase]
 DB_HOST=[dataBaseUri]
 DB_DIALECT=[mysql/mariaDB/Postgres]
-JWT_SECRET=[secretKey] // this key is for generate tokens with JsonWebToken
+JWT_SECRET=[secretKey] // esta clave se usa para generar tokens with JsonWebToken
 ```
 
 # Middlewares y services 🔐
@@ -227,12 +227,12 @@ _- Sequelize with mysql driver_
 
 _- Mysql_
 
-https://dev.mysql.com/downloads/
+[https://dev.mysql.com/downloads/](https://dev.mysql.com/downloads/)
 
 
 # Comandos útiles iniciales 👀
 
- `npm run start`  // Ejecuta el archivo principal para levantar el API
+`npm run start`  // Ejecuta el archivo principal para levantar el API
 
 _Es necesario levantar tu base de datos también y añadir tu .env con tus variables de entorno_
 
