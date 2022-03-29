@@ -17,7 +17,7 @@ const getPatient = async (req, res) => {
     if (req.query.address) queryPatient.address = req.query.address;
     if (req.query.phone_number) queryUser.phone_number = req.query.phone_number;
     res.json(
-      await Patient.findAll({ where: queryPatient, include: { model: User } })
+      await Patient.findAll({ where: queryPatient, include: { model: User }, })
     );
   } catch (error) {
     console.log(error);
@@ -81,7 +81,7 @@ const cancelVisit = async (req, res) => {
         {
           state: "cancelled",
         },
-        { where: { idPatient: decoded.id, id: req.params.id } }
+        { where: { idPatient: decoded.id, id: req.params.id }, }
       );
       res.status(200).json("Cancelled Visit id = " + req.params.id);
     } else {
@@ -121,7 +121,8 @@ const postPatient = async (req, res) => {
 
 const updatePatient = async (req, res) => {
   try {
-    if (await Patient.findByPk(req.params.id)) {
+    const decoded = tokenChecker(req.headers.token, process.env.JWT_SECRET);
+    if (await Patient.findByPk(decoded.id)) {
       await Patient.update(
         {
           sex: req.body.sex,
@@ -131,13 +132,14 @@ const updatePatient = async (req, res) => {
           allergies: req.body.allergies,
           address: req.body.address,
         },
-        { where: { id: req.params.id } }
+        { where: { id: decoded.id }, },
       );
       res.status(200).json("Updated id = " + req.params.id);
     } else {
       res.status(404).json("Patient doesn't exist");
     }
   } catch (error) {
+    console.log(error);
     res.json(error);
   }
 };
@@ -146,10 +148,11 @@ const deletePatient = async (req, res) => {
   try {
     const decoded = tokenChecker(req.headers.token, process.env.JWT_SECRET);
     await User.destroy({
-      where: { id: decoded.id }
+      where: { id: decoded.id },
     });
     res.json('Your profile has been deleted successfully!!');
   } catch (error) {
+    console.log(error);
     res.json(error);
   }
 };

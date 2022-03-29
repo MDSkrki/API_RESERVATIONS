@@ -1,8 +1,9 @@
 import express from "express";
 import { auth } from "../shared/middlewares.js";
-const router = express.Router();
 import { getDoctor, postDoctor, updateDoctor, deleteDoctor } from "./doctorController.js";
 
+// Router initialisation
+const router = express.Router();
 
 router.use(auth('Doctor'));
 
