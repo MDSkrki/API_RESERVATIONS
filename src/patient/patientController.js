@@ -121,8 +121,7 @@ const postPatient = async (req, res) => {
 
 const updatePatient = async (req, res) => {
   try {
-    const decoded = tokenChecker(req.headers.token, process.env.JWT_SECRET);
-    if (await Patient.findByPk(decoded.id)) {
+    if (await Patient.findByPk(req.params.id)) {
       await Patient.update(
         {
           sex: req.body.sex,
@@ -132,7 +131,7 @@ const updatePatient = async (req, res) => {
           allergies: req.body.allergies,
           address: req.body.address,
         },
-        { where: { id: decoded.id }, },
+        { where: { id: req.params.id }, },
       );
       res.status(200).json("Updated id = " + req.params.id);
     } else {
