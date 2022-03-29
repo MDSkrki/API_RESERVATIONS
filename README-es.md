@@ -2,6 +2,8 @@
 
 ![enter image description here](https://vinti7.com/wp-content/uploads/2016/05/logos-de-dentistas-35.jpg)
 
+[Click here to read README in English](./README.md) 
+
 ## Índice
   - [Api Reservations](#Api-Reservations)
   - [Tech Stack🛠](#Tech-Stack)
