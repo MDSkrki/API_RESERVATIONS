@@ -3,15 +3,12 @@ import { Visit, Doctor, Patient } from "../shared/models.js";
 const getVisit = async (req, res) => {
   try {
     const queryVisit = {};
-    const doctor = Doctor.findByPk(1);
-    const patient = Patient.findByPk(1);
     if (req.query.id) queryVisit.id = req.query.id;
     if (req.query.date) queryVisit.date = req.query.date;
     if (req.query.description) queryVisit.description = req.query.description;
     if (req.query.state) queryVisit.state = req.query.state;
     if (req.query.idDoctor) queryVisit.idDoctor = req.query.idDoctor;
     if (req.query.idPatient) queryVisit.idPatient = req.query.idPatient;
-    console.log(req.query.idDoctor, req.query.idPatient, " querys");
     res.json(
       await Visit.findAll({
         where: queryVisit,

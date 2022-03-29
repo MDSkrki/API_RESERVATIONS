@@ -8,11 +8,11 @@ const visitSchema = {
     id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        autoIncrement: true
     },
     date: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
     },
     description: {
@@ -25,10 +25,12 @@ const visitSchema = {
     idDoctor: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        unique: false,
     },
     idPatient: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        unique: false,
     }
 }
 

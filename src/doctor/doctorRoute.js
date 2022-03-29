@@ -1,10 +1,15 @@
 import express from "express";
+import { auth } from "../shared/middlewares.js";
 const router = express.Router();
-import { getDoctor, postDoctor, updateDoctor, deleteDoctor } from "./doctorController.js";
-
+import {
+  getDoctor,
+  postDoctor,
+  updateDoctor,
+  deleteDoctor,
+} from "./doctorController.js";
 
 router.get("/", getDoctor);
-router.post("/", postDoctor);
+router.post("/register", postDoctor);  // todos los endpoints doctor
 router.patch("/:id", updateDoctor);
 router.delete("/:id", deleteDoctor);
 

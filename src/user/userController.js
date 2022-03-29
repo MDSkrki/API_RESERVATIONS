@@ -1,5 +1,5 @@
 import { User } from "../shared/models.js";
-import {hasher} from '../shared/services.js';
+import {hasher, passChecker, tokenGenerator} from '../shared/services.js';
 
 //Get Users by all fields
 const getUser = async (req, res) => {
@@ -74,4 +74,53 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { getUser, postUser, updateUser, deleteUser };
+const userLogin = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      where: {
+        email: req.headers.email,
+      },
+    });
+    if (user != null) {
+      const checkedPass = await passChecker(
+        req.headers.password,
+        user.password
+      );
+      if (checkedPass) {
+        const token = tokenGenerator({ id: user.id, role: user.role });
+        user.isLogged = true
+        await user.save()
+        res.json("Your user token is " + token);
+      } else {
+        res.status(404).json("Password or email wrong");
+      }
+    } else {
+      res.status(404).json("Password or email wrong");
+    }
+  } catch (error) {
+    console.log(error);
+    res.json(error);
+  }
+};
+
+
+const userLogout = async (req, res) => {
+  try{
+    const token = req.headers.token;
+    const decoded = tokenChecker(token, process.env.JWT_SECRET)
+    const user = await User.findByPk(decoded.id);
+
+    if(user.isLogged==true){
+      user.isLogged = false;
+      await user.save();
+      res.json('Loggout success')
+    }else{
+      res.json('You are already logged')
+    }
+  }catch(error){
+    console.log(error)
+  }
+  
+}
+
+export { getUser, postUser, updateUser, deleteUser, userLogin, userLogout };
