@@ -1,5 +1,5 @@
 import { Doctor, User } from "../shared/models.js";
-import { hasher, passChecker, tokenGenerator, tokenChecker } from "../shared/services.js";
+import { emailValidator, hasher } from "../shared/services.js";
 
 //Get doctor by all fields with User model.
 const getDoctor = async (req, res) => {
@@ -12,7 +12,7 @@ const getDoctor = async (req, res) => {
     if (req.query.phone_number) queryDoctor.phone_number = req.query.phone_number;
     if (req.query.specialty) queryDoctor.specialty = req.query.specialty;
     if (req.query.schedule) queryDoctor.schedule = req.query.schedule;
-    res.json(await Doctor.findAll({ where: queryDoctor, include: {model: User} }));
+    res.json(await Doctor.findAll({ where: queryDoctor, include: { model: User } }));
   } catch (error) {
     res.json(error);
   }
@@ -24,7 +24,7 @@ const postDoctor = async (req, res) => {
     const createUser = await User.create({
       name: req.body.name,
       lastname: req.body.lastname,
-      email: req.body.email,
+      email: emailValidator(req.body.email),
       password: await hasher(req.body.password),
       phone_number: req.body.phone_number,
       role: 'Doctor'
@@ -37,7 +37,7 @@ const postDoctor = async (req, res) => {
     res.json(createDoctor);
   } catch (error) {
     console.log(error);
-    res.json(error)
+    res.json(error);
   }
 };
 
@@ -57,6 +57,7 @@ const updateDoctor = async (req, res) => {
       res.status(404).json("Doctor doesn't exist");
     }
   } catch (error) {
+    console.log(error);
     res.json(error);
   }
 };
@@ -70,6 +71,7 @@ const deleteDoctor = async (req, res) => {
       res.json("Doctor deleted id: " + req.params.id);
     }
   } catch (error) {
+    console.log(error);
     res.json(error);
   }
 };

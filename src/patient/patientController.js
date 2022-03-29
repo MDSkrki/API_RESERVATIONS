@@ -1,14 +1,9 @@
 import { Patient, User, Visit, Doctor } from "../shared/models.js";
-import {
-  hasher,
-  passChecker,
-  tokenChecker,
-  tokenGenerator,
-} from "../shared/services.js";
+import { emailValidator, hasher, tokenChecker } from "../shared/services.js";
 
 const getPatient = async (req, res) => {
   try {
-    const decoded = tokenChecker(req.headers.token, process.env.JWT_SECRET); //decoded.id == paciente que está accediendo aquí
+    const decoded = tokenChecker(req.headers.token, process.env.JWT_SECRET);
     const queryPatient = {};
     queryPatient.id = decoded.id;
     if (req.query.name) queryPatient.name = req.query.name;
@@ -103,7 +98,7 @@ const postPatient = async (req, res) => {
     const createUser = await User.create({
       name: req.body.name,
       lastname: req.body.lastname,
-      email: req.body.email,
+      email: emailValidator(req.body.email),
       password: await hasher(req.body.password),
       phone_number: req.body.phone_number,
       role: "Patient",
@@ -151,7 +146,7 @@ const deletePatient = async (req, res) => {
   try {
     if (req.params.id) {
       await Patient.destroy({
-        where: { id: req.params.id },
+        where: { id: req.params.id }
       });
       res.json("Patient deleted id: " + req.params.id);
     }

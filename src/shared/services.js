@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import isEmail from 'validator/lib/isEmail.js';
 dotenv.config();
 
 const hasher = async (password) => {
@@ -40,4 +41,8 @@ const tokenChecker = (token, secret) => {
     }
 }
 
-export {hasher, passChecker, tokenGenerator, tokenChecker};
+const emailValidator = (email) => {
+    if (isEmail(email)) {return email} else console.log('This is not an email');
+}
+
+export {hasher, passChecker, tokenGenerator, tokenChecker, emailValidator};
