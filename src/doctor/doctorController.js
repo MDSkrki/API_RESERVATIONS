@@ -66,10 +66,10 @@ const updateDoctor = async (req, res) => {
 const deleteDoctor = async (req, res) => {
   try {
     if (req.params.id) {
-      await Doctor.destroy({
+      await User.destroy({
         where: { id: req.params.id },
       });
-      res.json("Doctor deleted id: " + req.params.id);
+      res.json("User deleted id: " + req.params.id);
     }
   } catch (error) {
     console.log(error);
