@@ -50,13 +50,14 @@ const updateVisit = async (req, res) => {
           idDoctor: req.body.idDoctor,
           idPatient: req.body.idPatient,
         },
-        { where: { id: req.params.id } }
+        { where: { id: req.params.id } },
       );
       res.status(200).json("Updated id = " + req.params.id);
     } else {
       res.status(404).json("Visit doesn't exist");
     }
   } catch (error) {
+    console.log(error);
     res.json(error);
   }
 };
@@ -71,6 +72,7 @@ const deleteVisit = async (req, res) => {
       res.json("Visit deleted id: " + req.params.id);
     }
   } catch (error) {
+    console.log(error);
     res.json(error);
   }
 };

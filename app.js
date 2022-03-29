@@ -19,7 +19,7 @@ app.use("/user", routerUser);
 app.use("/doctor", routerDoctor); // meter aqui el auth Doctor
 app.use('/visit', routerVisit);
 app.use('/patient', routerPatient);
-app.use('/user', routerUser)
+app.use('/user', routerUser);
 
 // Express port definition and server up
 app.set("port", process.env.PORT);

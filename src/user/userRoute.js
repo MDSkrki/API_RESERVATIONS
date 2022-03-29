@@ -1,14 +1,14 @@
 import express from "express";
 import { auth } from "../shared/middlewares.js";
 const router = express.Router();
-import { getUser, postUser, updateUser, deleteUser,userLogin,userLogout } from "./userController.js";
+import { getUser, postUser, updateUser, deleteUser, userLogin, userLogout } from "./userController.js";
 
 
-router.get("/", auth('Doctor'), getUser); // Doctor
-router.get('/login', userLogin) // no auth
-router.get('/logout', auth('Patient'), userLogout) // auth Doctor Y Patient
-router.post("/", auth('Doctor'), postUser); // Doctor
-router.patch("/:id", auth('Doctor'), updateUser); // only Doctors
-router.delete("/:id", auth('Doctor'), deleteUser); // only doctors
+router.get("/", auth('Doctor'), getUser); // Doctors can see all users
+router.get('/login', userLogin); // If email and password exist in database, will give token to that user
+router.get('/logout', auth('Patient'), userLogout); // Doctor and Patient can logout
+router.post("/", auth('Doctor'), postUser); // Custom users can only be created by Doctors
+router.patch("/:id", auth('Doctor'), updateUser); // Doctors can custom update user data
+router.delete("/:id", auth('Doctor'), deleteUser); // Only Doctors can erase ANY profile (including its own!!)
 
 export default router;

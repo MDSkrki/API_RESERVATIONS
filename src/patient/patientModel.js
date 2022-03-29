@@ -1,7 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import { connection } from "../../config/mysqlDB.js";
 
-class Patient extends Model {}
+class Patient extends Model { }
 
 const patientSchema = {
   sex: {

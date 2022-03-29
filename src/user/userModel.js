@@ -32,7 +32,7 @@ const userSchema = {
   isLogged: {
     type: DataTypes.BOOLEAN,
     defaultValue: false
-  }
+  },
 };
 
 User.init(userSchema, {

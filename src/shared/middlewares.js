@@ -7,7 +7,6 @@ const auth = (roleToCheck) => {
             const decoded = tokenChecker(req.headers.token, process.env.JWT_SECRET);
             if (decoded.role === roleToCheck || decoded.role === 'Doctor') {
                 if (await logCheck(decoded.id)) {
-                    //req.decoded = decoded;
                     next();
                 } else {
                     res.json('You appear to be logged out. Please log in.');

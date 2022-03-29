@@ -16,7 +16,7 @@ const hasher = async (password) => {
 const passChecker = async (plainPass, hashedPass) => {
     try {
         const check = await bcrypt.compare(plainPass, hashedPass);
-        return check
+        return check;
     } catch (error) {
         console.log(error);
     }
@@ -42,7 +42,7 @@ const tokenChecker = (token, secret) => {
 }
 
 const emailValidator = (email) => {
-    if (isEmail(email)) {return email} else console.log('This is not an email');
+    if (isEmail(email)) { return email } else console.log('This is not an email');
 }
 
-export {hasher, passChecker, tokenGenerator, tokenChecker, emailValidator};
+export { hasher, passChecker, tokenGenerator, tokenChecker, emailValidator };

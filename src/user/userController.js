@@ -1,5 +1,5 @@
 import { User } from "../shared/models.js";
-import {hasher, passChecker, tokenGenerator} from '../shared/services.js';
+import { hasher, passChecker, tokenGenerator } from '../shared/services.js';
 
 //Get Users by all fields
 const getUser = async (req, res) => {
@@ -17,6 +17,7 @@ const getUser = async (req, res) => {
       })
     );
   } catch (error) {
+    console.log(error);
     res.json(error);
   }
 };
@@ -50,13 +51,14 @@ const updateUser = async (req, res) => {
           password: req.body.password,
           phone_number: req.body.phone_number,
         },
-        { where: { id: req.params.id } }
+        { where: { id: req.params.id } },
       );
       res.status(200).json("Updated id = " + req.params.id);
     } else {
       res.status(404).json("User doesn't exist");
     }
   } catch (error) {
+    console.log(error);
     res.json(error);
   }
 };
@@ -70,6 +72,7 @@ const deleteUser = async (req, res) => {
       res.json("User deleted id: " + req.params.id);
     }
   } catch (error) {
+    console.log(error);
     res.json(error);
   }
 };
@@ -84,12 +87,12 @@ const userLogin = async (req, res) => {
     if (user != null) {
       const checkedPass = await passChecker(
         req.headers.password,
-        user.password
+        user.password,
       );
       if (checkedPass) {
         const token = tokenGenerator({ id: user.id, role: user.role });
-        user.isLogged = true
-        await user.save()
+        user.isLogged = true;
+        await user.save();
         res.json("Your user token is " + token);
       } else {
         res.status(404).json("Password or email wrong");
@@ -105,22 +108,22 @@ const userLogin = async (req, res) => {
 
 
 const userLogout = async (req, res) => {
-  try{
+  try {
     const token = req.headers.token;
-    const decoded = tokenChecker(token, process.env.JWT_SECRET)
+    const decoded = tokenChecker(token, process.env.JWT_SECRET);
     const user = await User.findByPk(decoded.id);
 
-    if(user.isLogged==true){
+    if (user.isLogged == true) {
       user.isLogged = false;
       await user.save();
-      res.json('Loggout success')
-    }else{
-      res.json('You are already logged')
+      res.json('Loggout success');
+    } else {
+      res.json('You are already logged');
     }
-  }catch(error){
-    console.log(error)
+  } catch (error) {
+    console.log(error);
+    res.json(error);
   }
-  
 }
 
 export { getUser, postUser, updateUser, deleteUser, userLogin, userLogout };

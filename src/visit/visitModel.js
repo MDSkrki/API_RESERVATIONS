@@ -1,8 +1,8 @@
 import { DataTypes, Model } from "sequelize";
-import {connection} from "../../config/mysqlDB.js";
+import { connection } from "../../config/mysqlDB.js";
 
 
-class Visit extends Model {}
+class Visit extends Model { }
 
 const visitSchema = {
     id: {
@@ -31,7 +31,7 @@ const visitSchema = {
         type: DataTypes.INTEGER,
         allowNull: false,
         unique: false,
-    }
+    },
 }
 
 Visit.init(visitSchema, {
