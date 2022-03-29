@@ -10,6 +10,10 @@
   - [Tech Stack🛠](#tech-stack)
   - [Description and How to Use 📋](#description-and-how-to-use-)
     - [Associations 🥨](#associations-)
+    - [Endpoints ⛩](#endpoints-)
+      - [User](#user)
+      - [Patient](#patient)
+  - [Doctor](#doctor)
 
 
 ## Tech Stack🛠
@@ -71,3 +75,85 @@ It contains the additional information pertainig to the doctors and a foreign ke
 It contains the information about each appointment. It has two foreign keys, idDoctor and idPatient, that reference their associated tables. Dates are automatically created when appointments are initially made and updated thanks to Sequelize
 
 ### Associations 🥨
+
+```
+- User vs Patient 1:1
+- User vs Doctor 1:1
+- Doctor vs Patient n:m
+- Doctor vs Visit 1:n
+- Patient vs Visit 1:n
+```
+
+### Endpoints ⛩
+
+#### User
+
+```json
+{
+      "name": "userName",
+      "lastname": "userLastName",
+      "email": "userEmail@userDomain.com",
+      "password": "userPassword",
+      "phone_number": "userPhone"
+} 
+```
+
+* _GET_ `/user` Returns all users / Only Doctors(admin) can perform this operation
+* _GET_ `/user/login` Requires email and password through headers. If user exists, sets state to isLogged : true and gives token.
+* _GET_ `/user/logout` Requires token through headers. If token is valid and user exists, isLogged sets to false (making token useless)
+* _POST_ `/user` This endpoint can only be accessed by Doctors in order to create custom users, such as admins or any other type of users needed. Password introduced will be saved as hashed.
+* _PATCH_ `/:id` Requires user's id through path params in order to update the user's fields / Only Doctors(admin) can perform this operation
+* _DELETE_ `/:id` Requires user's id through path params in order to erase a user, including themselves(!!) / Only Doctors(admin) can perform this operation
+
+#### Patient
+
+```json
+{
+      "name": "yourName",
+      "lastname": "yourLastName",
+      "email": "example@example.com",
+      "password": "yourPassword",
+      "phone_number": "yourPhoneNumber",
+
+      <!------ Patient Related Data ------>
+      
+      "sex": "yourSex",
+      "birth_date": "YYYY-MM-DD",
+      "age": "yourAge",
+      "dni": "yourDNIwithLetter",
+      "allergies": "yourAllergies",
+      "address": "YourAdress"
+    }
+```
+
+Post Visit as Patient 
+
+```json
+{
+      "date": "YYYY-MM-DD hour:min:sec",
+      "description": "visitDescription",
+      "state": "pending/finished/cancelled",
+      "idDoctor": idDoctor(INTEGER),
+      "idPatient": iDPatient(INTEGER)
+}
+```
+
+* _GET_ `/patient` Requires token through headers, shows patient's own data and user associated and can query by any of the fields / Can only be performed by Patients
+* _GET_ `/patient/visits` Requires token through headers. Patient can see all his appointments and query by all fields (except by date) / Can only be performed by Patients
+* _PATCH_ `/patient/visits/cancellation/:id` Requires token through headers and visit id through path params. Patient cn only update his own appointments.
+* _POST_ `/visits/create` Requires token through headers. Can only create appointment for themselves. / Can only be performed by Patients
+* _POST_ `/register` They need to introduce the data as in the example above. Patient and User are created at the same time, and password is saved directly as hashed. Automatically recieves 'Patient' role. / Free Access
+* _PATCH_ `/patient` Requires token through headers. Patient can modify their patient-related data.
+* _DELETE_ `/patient` Requires token through headers. Patient can erase his own data (does not erase his user-related data !!)
+
+## Doctor
+
+```json
+{
+      "date": "YYYY-MM-DD hour:min:sec",
+      "description": "visitDescription",
+      "state": "pending/finished/cancelled",
+      "idDoctor": idDoctor(INTEGER),
+      "idPatient": iDPatient(INTEGER)
+}
+```

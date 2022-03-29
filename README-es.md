@@ -88,7 +88,7 @@ A continuación detallaremos los endpoints de cada entidad y su Schema:
 
 ## User
 
-```
+```json
 {
       "name": "userName",
       "lastname": "userLastName",
@@ -98,22 +98,24 @@ A continuación detallaremos los endpoints de cada entidad y su Schema:
 } 
 ```
 
-* get `/user` Devuelve todos los usuarios / Sólo puede hacerlo un Doctor(admin) 
-* get `/user/login` Se introduce el email y password del User en headers, si el usuario existe, devuelve un token, y pasa al estado isLogged true.
-* get `/user/logout` Se introduce el token por headers, si el usuario existe y el token es válido, hace logout y pasa al estado isLogged false
-* post `/user` Este endpoint solo tienen acceso Doctors para crear usuarios personalizados como nuevos doctores, admins u otros roles. Se hashea la password.
-* patch `/:id` Es necesario introducir el id User por path params(URI) para modificar al usuario / Sólo doctores(Admin) tienen acceso
-* delete `/:id` Es necesario introducir el id User por path params(URI) para borrar un User, incluyendose a sí mismo también // Sólo doctores(Admin) tienen acceso
+* _GET_ `/user` Devuelve todos los usuarios / Sólo puede hacerlo un Doctor(admin) 
+* _GET_ `/user/login` Se introduce el email y password del User en headers, si el usuario existe, devuelve un token, y pasa al estado isLogged true.
+* _GET_ `/user/logout` Se introduce el token por headers, si el usuario existe y el token es válido, hace logout y pasa al estado isLogged false
+* _POST_ `/user` Este endpoint solo tienen acceso Doctors para crear usuarios personalizados como nuevos doctores, admins u otros roles. Se hashea la password.
+* _PATCH_ `/:id` Es necesario introducir el id User por path params(URI) para modificar al usuario / Sólo doctores(Admin) tienen acceso
+* _DELETE_ `/:id` Es necesario introducir el id User por path params(URI) para borrar un User, incluyendose a sí mismo también // Sólo doctores(Admin) tienen acceso
 
 ## Patient
-```
+```json
 {
       "name": "yourName",
       "lastname": "yourLastName",
       "email": "example@example.com",
       "password": "yourPassword",
       "phone_number": "yourPhoneNumber",
-      <!------ Patient Data ------>
+
+      <!------ Patient Related Data ------>
+
       "sex": "yourSex",
       "birth_date": "YYYY-MM-DD",
       "age": "yourAge",
@@ -124,7 +126,7 @@ A continuación detallaremos los endpoints de cada entidad y su Schema:
 ```
 Post Visit as Patient
 
-```
+```json
 {
       "date": "YYYY-MM-DD hour:min:sec",
       "description": "visitDescription",
@@ -133,12 +135,12 @@ Post Visit as Patient
       "idPatient": iDPatient(INTEGER)
 }
 ```
-* get `/patient` Es necesario introducir el token en headers, muestra sus datos de paciente y usuario y puede filtrar por cualquiera de ellos / Sólo puede hacerlo un Patient 
-* get `/patient/visits` Se introduce el token en headers, y el Patient solo puede ver sus citas y filtrar por cualquiera de sus campos menos por fecha / Sólo puede acceder Patient
-* patch `/patient//visits/cancellation/:id` Introduciendo el token por headers, y el id de la visita por path params (URI) el Patient puede borrar sólo sus visitas
-* post `/visits/create` Introduciendo el token por headers, puede crear su propia cita. Se hashea la password / Puede acceder cualquiera / Se le asigna automáticamente el role de Patient
-* post `/register` Es necesario introducir el ejemplo de arriba y se crea el Patient y el User a la vez / Sólo puede acceder Patient
-* patch `/patient` Es necesario introducir el token para que el Patient modifique cualquiera de sus datos / Sólo puede acceder Patient
+* _GET_ `/patient` Es necesario introducir el token en headers, muestra sus datos de paciente y usuario y puede filtrar por cualquiera de ellos / Sólo puede hacerlo un Patient 
+* _GET_ `/patient/visits` Se introduce el token en headers, y el Patient solo puede ver sus citas y filtrar por cualquiera de sus campos menos por fecha / Sólo puede acceder Patient
+* _PATCH_ `/patient/visits/cancellation/:id` Introduciendo el token por headers, y el id de la visita por path params (URI) el Patient puede actualizar sólo sus visitas
+* _POST_ `/visits/create` Introduciendo el token por headers, puede crear su propia cita. / Sólo puede acceder Patient
+* _POST_ `/register` Es necesario introducir el ejemplo de arriba y se crea el Patient y el User a la vez. Se hashea la password / Puede acceder cualquiera / Se le asigna automáticamente el role de Patient
+* _PATCH_ `/patient` Es necesario introducir el token para que el Patient modifique cualquiera de sus datos / Sólo puede acceder Patient
 * delete `/patient` Es necesario introducir token , el Patient puede borrarse a sí mismo, pero no borra su usuario.
 
 ## Doctor
@@ -164,7 +166,7 @@ Para cualquiera de los endpoints de doctor es necesario es necesario tener role 
 * delete `/doctor/:id` Introduciento el id por path params(URI) puede eliminar la información de cualquier doctor.
 
 ## Visit
-```
+```json
 {
       "date": "YYYY-MM-DD hour:min:sec",
       "description": "visitDescription",
