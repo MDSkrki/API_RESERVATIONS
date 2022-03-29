@@ -144,12 +144,11 @@ const updatePatient = async (req, res) => {
 
 const deletePatient = async (req, res) => {
   try {
-    if (req.params.id) {
-      await Patient.destroy({
-        where: { id: req.params.id }
-      });
-      res.json("Patient deleted id: " + req.params.id);
-    }
+    const decoded = tokenChecker(req.headers.token, process.env.JWT_SECRET);
+    await User.destroy({
+      where: { id: decoded.id }
+    });
+    res.json('Your profile has been deleted successfully!!');
   } catch (error) {
     res.json(error);
   }

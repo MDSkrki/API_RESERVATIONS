@@ -9,6 +9,6 @@ router.patch('/visits/cancellation/:id', auth('Patient'), cancelVisit) // User o
 router.post('/visits/create', auth('Patient'), postVisit )
 router.post('/register', postPatient);
 router.patch("/:id", auth('Patient'), updatePatient); // solo paciente
-router.delete("/:id", auth('Patient'), deletePatient); // paciente y doctor
+router.delete("/", auth('Patient'), deletePatient); // paciente y doctor
 
 export default router;
