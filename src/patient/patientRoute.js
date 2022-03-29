@@ -8,7 +8,7 @@ router.get('/visits', auth('Patient'), getVisit); // Patient will only see his o
 router.patch('/visits/cancellation/:id', auth('Patient'), cancelVisit); // User can only cancel its own visits
 router.post('/visits/create', auth('Patient'), postVisit); // Patient can request appointments for itself
 router.post('/register', postPatient);
-router.patch("/:id", auth('Patient'), updatePatient); // Patient can update his own information (not login-related)
+router.patch("/", auth('Patient'), updatePatient); // Patient can update his own information (not login-related)
 router.delete("/", auth('Patient'), deletePatient); // Patient can delete its own profile
 
 export default router;

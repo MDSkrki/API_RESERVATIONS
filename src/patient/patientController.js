@@ -121,22 +121,19 @@ const postPatient = async (req, res) => {
 
 const updatePatient = async (req, res) => {
   try {
-    if (await Patient.findByPk(req.params.id)) {
-      await Patient.update(
-        {
-          sex: req.body.sex,
-          birth_date: req.body.birth_date,
-          age: req.body.age,
-          dni: req.body.dni,
-          allergies: req.body.allergies,
-          address: req.body.address,
-        },
-        { where: { id: req.params.id }, },
-      );
-      res.status(200).json("Updated id = " + req.params.id);
-    } else {
-      res.status(404).json("Patient doesn't exist");
-    }
+    const decoded = tokenChecker(req.headers.token, process.env.JWT_SECRET);
+    await Patient.update(
+      {
+        sex: req.body.sex,
+        birth_date: req.body.birth_date,
+        age: req.body.age,
+        dni: req.body.dni,
+        allergies: req.body.allergies,
+        address: req.body.address,
+      },
+      { where: { id: decoded.id }, },
+    );
+    res.status(200).json("Updated id = " + decoded.id);
   } catch (error) {
     console.log(error);
     res.json(error);
