@@ -1,11 +1,11 @@
 # API Citas Clinica Dental
 
-![enter image description here](https://vinti7.com/wp-content/uploads/2016/05/logos-de-dentistas-35.jpg)
+![logo clinica dental](https://vinti7.com/wp-content/uploads/2016/05/logos-de-dentistas-35.jpg)
 
 [Click here to read README in English](./README.md) 
 
 ## Índice
-  - [Api Reservations](#Api-Reservations)
+  - [API Citas Clinica Dental](#api-citas-clinica-dental)
   - [Tech Stack🛠](#Tech-Stack)
   - [Requisitos 📋](#Descripcion-y-usabilidad)
   - [Relaciones🥨](#Relaciones)
@@ -35,13 +35,26 @@ Se han utilizado las siguientes tecnologías:
   
 </a> 
 </p>
-Además se ha hecho uso de las siguientes librerías/herramientas/tecnologías para el desarrollo del proyecto: Entorno: Nodejs, ORM: Sequelize, librería: JsonWebToken, librería: express ,librería para desarrollo: nodemon, SGBD: Mysql, gestores DB UI: Mysql Workbench, driver: Mysql2 librería hash password bcrypt, libería validator para hacer la validacion del parametro introducido email, librería para variables de entorno: dotenv,herramienta para alojar el repo: github, herramienta de despliegue de proyecto Node: heroku.
+Además se ha hecho uso de las siguientes librerías/herramientas/tecnologías para el desarrollo del proyecto:
+-  Entorno: `Nodejs` 
+-  ORM: `Sequelize`
+-  `JsonWebToken`  para autenticación
+-  `express` 
+-  Librería para desarrollo: `nodemon` 
+-  SGBD: `Mysql`, 
+-  Gestores DB UI: `Mysql Workbench`, 
+-  Driver: `Mysql2` 
+-  Librería hash password `bcrypt`, 
+-  Libería `validator` para hacer la validacion del parametro introducido email, 
+-  Librería para variables de entorno: `dotenv`,
+-  Herramienta para alojar el repo: `github`, 
+-  Herramienta de despliegue de proyecto Node: `heroku`.
 
 # Descripción y usabilidad 📋
 
 Proyecto del bootcamp en GeeksHubs dónde desde producción nos piden que realicemos el backend de un sistema de gestión de citas en una clínica dental.
-Éste es el primer proyecto grupal, en el que hemos trabajado dos developers, **_Mihai Daniel Somkereki_ y _Alejandro Montero_**, y hemos seguido la filosofía gitFlow junto con metodologia ágil Kanban mediante Trello para la organización y optimización del tiempo, tareas y trabajo conjunto.<br>
-Mihai ha creado el repositorio de producción en Github, creando un scaffolding básico de patrón MVC de directorios orientado a entidades ya que nos ha sido más fácil para organizar los archivos. Con el scaffolding realizado hemos optado por hacer un fork del mismo para poder trabajar en paralelo, y subir los cambios al mismo repositorio remoto, el de Mihai. <br>
+Éste es el primer proyecto grupal, en el que hemos trabajado dos developers, **_Mihai Daniel Somkereki_ y _Alejandro Montero_**, y hemos seguido la filosofía gitFlow junto con metodologia ágil Kanban mediante Trello para la organización y optimización del tiempo, tareas y trabajo conjunto.<br/>
+Mihai ha creado el repositorio de producción en Github, creando un scaffolding básico de patrón MVC de directorios orientado a entidades ya que nos ha sido más fácil para organizar los archivos. Con el scaffolding realizado hemos optado por hacer un fork del mismo para poder trabajar en paralelo, y subir los cambios al mismo repositorio remoto, el de Mihai. <br/>
 Utilizando la filosofía gitFlow cada uno nos hemos creado una rama develop, dónde ha ido progresando el proyecto paralelamente y ramas adicionales para ir añadiendo funcionalidades al proyecto, una vez que las funcionalidades funcionan correctamente se han añadido a la rama develop, o en el caso de Alejandro, se ha pusheado al remoto develop de Mihai. En el despliegue se ha hecho un merge a master para subirlo a Heroku.<br>
 Para este proyecto hemos utilizado como ORM sequelize para interactuar con la base de datos Mysql dónde el primer paso que hemos realizado ha sido hacer el diagrama de Entidad-Relacion del sistema de gestion de citas de la clinica dental que mostramos a continuación:
 
@@ -55,7 +68,7 @@ Contiene los datos adicionales de un Patient y una clave foránea idUser que hac
 - Tabla Doctor:
 Contiene los datos adicionales de un Doctor y una clave foránea idUser que hace referencia al usuario del doctor, al igual que con Patients, cuando un doctor se registra se le genera automáticamente su usuario teniendo en cuenta que tiene que rellenar los datos de doctor y user en el registro.
 - Tabla Visit:
-Contiene la información necesaria sobre las visitas. Visit, es la tabla asociativa entre Patient y Doctor dónde existen dos claves foraneas de idDoctor e idPatient, que hacen referencia a sus tablas relacionadas. Gracias a Mysql se añaden automáticamente los campos de Date con la fecha de creación de la visita y la fecha de la última modificación de la misma.
+Contiene la información necesaria sobre las visitas. Visit, es la tabla asociativa entre Patient y Doctor dónde existen dos claves foraneas de idDoctor e idPatient, que hacen referencia a sus tablas relacionadas. Gracias a Sequelize se añaden automáticamente los campos de Date con la fecha de creación de la visita y la fecha de la última modificación de la misma.
 
 # Relaciones 🥨
 
