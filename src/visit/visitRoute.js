@@ -1,4 +1,5 @@
 import express from "express";
+import { auth } from "../shared/middlewares.js";
 import { deleteVisit, getVisit, postVisit, updateVisit } from "./visitController.js";
 const router = express.Router();
 
