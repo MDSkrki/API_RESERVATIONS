@@ -16,6 +16,10 @@ env.config();
 //Parse body to JSON
 app.use(express.json());
 
+const myGithub = "https://github.com/AlexMonPe/apiRestfullMovies"
+const text = "documentation"
+// ENDPOINTS
+app.get('/', (req,res)=> res.send('Welcome to our API_reservations, read ' + text.link(myGithub) + ' to start'))
 //Endpoints
 app.use("/user", routerUser);
 app.use("/doctor", routerDoctor); // meter aqui el auth Doctor
