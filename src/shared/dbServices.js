@@ -6,4 +6,4 @@ const logCheck = async (id) => {
     return false;
 }
 
-export { logCheck };
+export { logCheck }
