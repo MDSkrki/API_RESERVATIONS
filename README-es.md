@@ -36,6 +36,7 @@ Se han utilizado las siguientes tecnologías:
 </a> 
 </p>
 Además se ha hecho uso de las siguientes librerías/herramientas/tecnologías para el desarrollo del proyecto:
+
 -  Entorno: `Nodejs` 
 -  ORM: `Sequelize`
 -  `JsonWebToken`  para autenticación
